@@ -35,3 +35,17 @@ export const createUser = async(email, password) => {
     return users;
    
 }
+
+// Update user
+export const updateUser = async(email, password) => {
+    const users = getALlUsers();
+    const found = getByEmail(email);
+     if(found) {
+        throw new Error ("user already exist");
+     }
+    const hashPassword = await bcrypt.hash(password , 12);
+    users.push({id: users.length + 1, email, password : hashPassword});
+    fs.writeFileSync(filePathUsers, JSON.stringify(users));
+    return users;
+   
+}

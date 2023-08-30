@@ -2,10 +2,10 @@ import Form from "../../components/form";
 
 export default function UpdateUser() {
 
-  const onUpdateUser = async (email, password) => {
-    const res = await fetch("/api/auth/signup", {
+  const onUpdateUser = async ( password) => {
+    const res = await fetch("/api/auth/updatePassword", {
       method: "PATCH",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ password }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -20,7 +20,7 @@ export default function UpdateUser() {
 
   return (
     <div className="flex justify-center items-center">
-      <Form onFormSubmit={onSignUp}  updatePassword/>
+      <Form onFormSubmit={onUpdateUser}  updatePassword/>
     </div>
   );
 }

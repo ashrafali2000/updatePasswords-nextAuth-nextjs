@@ -7,6 +7,8 @@ export default function Form({signin,onFormSubmit, updatePassword}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
@@ -63,17 +65,12 @@ export default function Form({signin,onFormSubmit, updatePassword}) {
               </div>
   
               <div>
-                {signin ? <button
+                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
-                </button> : <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign up
-                </button>  }
+                {updatePassword ? "Update password" : signin ? " Sign in" : "Sign up"}
+                </button> 
               </div>
             </form>
   
