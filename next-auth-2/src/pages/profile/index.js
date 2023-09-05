@@ -19,12 +19,13 @@ export async function getServerSideProps({ req, res }) {
   };
 }
 
-
-export default function Profile() {
+export default function Profile({email}) {
   return (
-    <div className="h-[70vh] flex items-center justify-center">
-      <h1 className="text-3xl font-semibold">My profile page</h1>
-      <Link href={"./auth/updateUser"} className=" rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    <div className="">
+      <h1 className="text-3xl font-semibold"> {email} profile page</h1>
+      <h1>Hi {email}</h1>
+      <h2>Are You Change Your Password</h2>
+      <Link href={"./auth/updatePassword"} className=" rounded-full bg-indigo-600 px-5 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >update password</Link>
     </div>
   );
