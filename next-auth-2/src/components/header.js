@@ -2,8 +2,8 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 export default function Header() {
   return (
-    <div>
-      <h1>Next Authentication</h1>{" "}
+    <div className="flex justify-between flex-wrap">
+      <h1>Next Authentication</h1>
       <div>
         <Link
           href={"/profile"}
