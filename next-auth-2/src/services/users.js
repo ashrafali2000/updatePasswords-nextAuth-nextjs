@@ -6,7 +6,7 @@ const filePathUsers = path.join(process.cwd(), "src", "database", "users.json");
 
 // user getALlUsers function
 export const getALlUsers = () => {
-    const {users} = fs.readFileSync(filePathUsers);
+    const users = fs.readFileSync(filePathUsers);
     return JSON.parse(users);
 }
 
