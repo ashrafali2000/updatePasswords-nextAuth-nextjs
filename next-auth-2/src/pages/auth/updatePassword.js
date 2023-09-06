@@ -6,18 +6,13 @@ export default function UpdateUser() {
 
   const onUpdateUser = async (oldPassword, newPassword) => {
     const userEmail = session.user.email;
-    const response = await fetch("/api/auth/updatePassword", {
+    const res = await fetch("/api/auth/updatePassword", {
       method: "PATCH",
       body: JSON.stringify({ oldPassword, newPassword, userEmail }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    if (!response.ok) {
-      console.error(data.message);
-      return;
-    }
     alert("Update Password successful");
   };
 
