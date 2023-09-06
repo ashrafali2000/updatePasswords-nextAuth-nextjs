@@ -31,7 +31,7 @@ export const createUser = async(email, password) => {
      }
     const hashPassword = await bcrypt.hash(password , 12);
     users.push({id: users.length + 1, email, password : hashPassword});
-    fs.writeFileSync(filePathUsers, JSON.stringify(users));
+    fs.writeFileSync(filePathUsers, JSON.stringify({users}));
     return users;
    
 }

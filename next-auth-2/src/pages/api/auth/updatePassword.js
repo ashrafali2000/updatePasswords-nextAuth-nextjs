@@ -1,62 +1,24 @@
-import fs from "fs";
-import path from "path";
-import bcrypt from "bcrypt";
+import { verifyUserPassword, updateUserPassword } from "@/services/users";
 
-const filePathUsers = path.join(process.cwd(), "src", "database", "users.json");
+export default async function handler(req, res) {
+  if (req.method === "PATCH") {
+    const { oldPassword, newPassword, userEmail } = req.body;
 
-// user getALlUsers function
-export const getALlUsers = () => {
-  const users = fs.readFileSync(filePathUsers);
-  return JSON.parse(users);
-};
+    try {
+      // Check if oldPassword matches the user's current password
+      const passwordMatches = await verifyUserPassword(userEmail, oldPassword);
 
-// check getByEmail function
-export const getByEmail = (email) => {
-  const { users } = getALlUsers();
-  return users.find((user) => user.email === email);
-};
+      if (!passwordMatches) {
+        return res.status(401).json({ error: "Invalid password" });
+      }
+      // Update the user's password
+      await updateUserPassword(userEmail, newPassword);
 
-// Varify password function
-export const verifyPassword = async (password, hashPassword) => {
-  const isValid = await bcrypt.compare(password, hashPassword);
-  return isValid;
-};
-
-// create user function
-export const createUser = async (email, password) => {
-  const { users } = getALlUsers();
-  const found = getByEmail(email);
-  if (found) {
-    throw new Error("user already exist");
-  }
-  const hashPassword = await bcrypt.hash(password, 12);
-  users.push({ id: users.length + 1, email, password: hashPassword });
-  fs.writeFileSync(filePathUsers, JSON.stringify({ users }));
-  return users;
-};
-
-// Updata password Functions
-export async function verifyUserPassword(userEmail, oldPassword) {
-  const found = getByEmail(userEmail);
-  if (found) {
-    const isValid = await bcrypt.compare(oldPassword, found.password);
-    return isValid;
-  }
-}
-
-export async function updateUserPassword(userEmail, newPassword) {
-  let { users } = getALlUsers();
-  const found = getByEmail(userEmail);
-  const hashPassword = await bcrypt.hash(newPassword, 12);
-  let val = false;
-  for (let a = 0; a < users.length; a++) {
-    if (users[a].email === found.email) {
-      users[a].password = hashPassword;
-      val = true;
-      break;
+      return res.status(201).json({ message: "Password updated successfully" });
+    } catch (error) {
+      return res.status(500).json({ error: "Password update failed" });
     }
-  }
-  if (val) {
-    fs.writeFileSync(filePathUsers, JSON.stringify({ users }));
+  } else {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 }
