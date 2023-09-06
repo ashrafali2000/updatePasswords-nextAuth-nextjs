@@ -37,12 +37,10 @@ export const createUser = async(email, password) => {
 }
 
 // Updata password Functions
-export async function verifyUserPassword(userEmail, oldPassword) {
-    const found = getByEmail(userEmail);
-    if (found) {
-      const isValid = await bcrypt.compare(oldPassword, found.password);
+export async function verifyUserPassword( oldPassword,hashPassword1) {
+      const isValid = await bcrypt.compare(oldPassword, hashPassword1);
       return isValid;
-    }
+  
   }
   
   export async function updateUserPassword(userEmail, newPassword) {

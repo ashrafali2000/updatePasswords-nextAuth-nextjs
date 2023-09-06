@@ -5,7 +5,9 @@ export default async function handler(req, res) {
     const { oldPassword, newPassword, userEmail } = req.body;
 
     try {
-      const passwordMatches = await verifyUserPassword(userEmail, oldPassword);
+      const myUser = getByEmail(userEmail);
+
+      const passwordMatches = await verifyUserPassword(oldPassword, myUser.password);
       if (!passwordMatches) {
          res.status(401).json({ error: "Invalid password" });
       }
