@@ -6,17 +6,14 @@ export default async function handler(req, res) {
 
     try {
       const myUser = getByEmail(userEmail);
+      const userVerifyPassword = await verifyUserPassword(oldPassword, myUser.password);
+     
+      const user =  await updateUserPassword(userEmail, newPassword);
+       res.status(201).json(user);
 
-      const passwordMatches = await verifyUserPassword(oldPassword, myUser.password);
-      if (!passwordMatches) {
-         res.status(401).json({ error: "Invalid password" });
+      res.status(200).json(userVerifyPassword);
+      } catch (err) {
+        res.status(400).json({ message: err.message });
       }
-      // Update the user's password
-    const user =  await updateUserPassword(userEmail, newPassword);
-     res.status(201).json(user);
-
-    } catch (error) {
-       res.status(500).json({ error: "Password update failed" });
-    }
   } 
 }

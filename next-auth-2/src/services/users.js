@@ -39,8 +39,10 @@ export const createUser = async(email, password) => {
 // Updata password Functions
 export async function verifyUserPassword( oldPassword,hashPassword1) {
       const isValid = await bcrypt.compare(oldPassword, hashPassword1);
+      if(!isValid) {
+        throw new Error ("Your Old password not matched");
+     }
       return isValid;
-  
   }
   
   export async function updateUserPassword(userEmail, newPassword) {
@@ -57,6 +59,6 @@ export async function verifyUserPassword( oldPassword,hashPassword1) {
     }
     if (val) {
       fs.writeFileSync(filePathUsers, JSON.stringify({ users }));
-    }
+   }
   }
   

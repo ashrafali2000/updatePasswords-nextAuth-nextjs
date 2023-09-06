@@ -13,7 +13,12 @@ export default function UpdateUser() {
         "Content-Type": "application/json",
       },
     });
-    alert("Update Password successful");
+  
+    if (!res.ok) {
+      alert("Your Old Password does not matched");
+      return;
+    }
+    alert("Password Update successful");
   };
 
   return (
