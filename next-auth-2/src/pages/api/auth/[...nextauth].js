@@ -20,7 +20,7 @@ export const authOptions = {
           throw new Error("incorrect password");
         }
 
-        return { email ,password};
+        return { email};
       },
     }),
   ],
